@@ -24,6 +24,18 @@ export default {
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				// Terminal theme colors
+				terminal: {
+					bg: 'hsl(var(--terminal-bg))',
+					text: 'hsl(var(--terminal-text))',
+					prompt: 'hsl(var(--terminal-prompt))',
+					glow: 'hsl(var(--terminal-glow))',
+					secondary: 'hsl(var(--terminal-secondary))',
+					muted: 'hsl(var(--terminal-muted))',
+					error: 'hsl(var(--terminal-error))',
+					warning: 'hsl(var(--terminal-warning))',
+					success: 'hsl(var(--terminal-success))',
+				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'

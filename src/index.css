@@ -2,14 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Terminal Portfolio Design System - All colors, gradients, fonts, etc should be defined here. 
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Terminal theme colors */
+    --background: 220 13% 8%;
+    --foreground: 120 100% 75%;
+    
+    /* Terminal specific colors */
+    --terminal-bg: 220 13% 5%;
+    --terminal-text: 120 100% 75%;
+    --terminal-prompt: 120 100% 85%;
+    --terminal-glow: 120 100% 50%;
+    --terminal-secondary: 120 50% 60%;
+    --terminal-muted: 120 20% 45%;
+    --terminal-error: 0 100% 70%;
+    --terminal-warning: 45 100% 70%;
+    --terminal-success: 120 100% 75%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -101,5 +113,39 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
+    overflow: hidden;
+  }
+  
+  /* Terminal cursor animation */
+  @keyframes cursor-blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+  
+  .cursor-blink {
+    animation: cursor-blink 1s infinite;
+  }
+  
+  /* Terminal glow effect */
+  .terminal-glow {
+    text-shadow: 0 0 5px hsl(var(--terminal-glow) / 0.5);
+  }
+  
+  .terminal-strong-glow {
+    text-shadow: 0 0 10px hsl(var(--terminal-glow) / 0.8), 0 0 20px hsl(var(--terminal-glow) / 0.4);
+  }
+  
+  /* Smooth typing animation */
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+  
+  .typing-animation {
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 2px solid hsl(var(--terminal-prompt));
+    animation: typing 2s steps(40, end), cursor-blink 1s infinite step-end;
   }
 }
