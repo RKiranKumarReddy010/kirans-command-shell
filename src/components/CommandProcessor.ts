@@ -1,3 +1,5 @@
+import { ProfileScraper, ProfileData } from '@/services/ProfileScraper';
+
 export class CommandProcessor {
   private userData = {
     name: 'R Kiran Kumar Reddy',
@@ -9,6 +11,8 @@ export class CommandProcessor {
     location: 'India',
     title: 'Software Developer',
   };
+
+  private profileData: ProfileData | null = null;
 
   private files = {
     'about.txt': `Name: ${this.userData.name}
@@ -202,6 +206,16 @@ Self-taught skills:
       case 'history':
         return `Command history is managed by the terminal. Use ↑/↓ arrow keys!`;
       
+      case 'scrape':
+        return this.scrapeProfiles();
+      
+      case 'repos':
+      case 'repositories':
+        return this.showRepositories();
+      
+      case 'stats':
+        return this.showStats();
+      
       default:
         return `Command '${cmd}' not found. Type 'help' for available commands.`;
     }
@@ -248,6 +262,13 @@ Self-taught skills:
 │ echo <text>      Echo text to the terminal                                  │
 │ curl -s wttr.in  Check weather information                                  │
 │ exit             Display exit message                                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+🔄 PROFILE DATA COMMANDS
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ scrape           Fetch live data from GitHub, LinkedIn, Kaggle, Topmate     │
+│ repos            Show GitHub repositories with stats                        │
+│ stats            Display profile statistics from all platforms              │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 💡 PRO TIPS & SHORTCUTS
@@ -523,5 +544,124 @@ Humidity: 65%
 Wind: 8 km/h
 
 Note: This is a simulated weather response for demo purposes!`;
+  }
+
+  private async scrapeProfiles(): Promise<string> {
+    try {
+      this.profileData = await ProfileScraper.scrapeAllProfiles();
+      this.updateFilesWithScrapedData();
+      
+      return `🔄 Profile scraping completed successfully!
+
+📊 Data fetched from:
+├── ✅ GitHub: ${this.profileData.github.publicRepos} repositories
+├── ✅ LinkedIn: ${this.profileData.linkedin.experience.length} experiences  
+├── ✅ Kaggle: ${this.profileData.kaggle.tier} tier
+└── ✅ Topmate: ${this.profileData.topmate.services.length} services
+
+💡 Use 'repos', 'stats', or refresh 'about' to see updated data!`;
+    } catch (error) {
+      return `❌ Error scraping profiles: ${error}
+      
+💡 Note: Some platforms have anti-scraping measures. GitHub data should work!`;
+    }
+  }
+
+  private showRepositories(): string {
+    if (!this.profileData?.github.repositories.length) {
+      return `📁 No repository data available yet.
+
+💡 Run 'scrape' command first to fetch live GitHub data!`;
+    }
+
+    const repos = this.profileData.github.repositories
+      .slice(0, 10)
+      .map((repo, index) => 
+        `${index + 1}. ${repo.name}
+   ├── ${repo.description}
+   ├── Language: ${repo.language}
+   ├── ⭐ ${repo.stars} stars | 🍴 ${repo.forks} forks
+   └── ${repo.url}`
+      ).join('\n\n');
+
+    return `📁 Top GitHub Repositories:
+
+${repos}
+
+💡 Visit GitHub profile for complete list: ${this.userData.github}`;
+  }
+
+  private showStats(): string {
+    if (!this.profileData) {
+      return `📊 No profile statistics available.
+
+💡 Run 'scrape' command first to fetch live data from all platforms!`;
+    }
+
+    return `📊 Profile Statistics:
+
+GitHub Stats:
+├── Public Repositories: ${this.profileData.github.publicRepos}
+├── Followers: ${this.profileData.github.followers}
+├── Following: ${this.profileData.github.following}
+└── Top Language: ${this.profileData.github.repositories[0]?.language || 'N/A'}
+
+Kaggle Performance:
+├── Tier: ${this.profileData.kaggle.tier}
+├── Points: ${this.profileData.kaggle.points}
+├── Competitions: ${this.profileData.kaggle.competitions}
+├── Datasets: ${this.profileData.kaggle.datasets}
+└── Notebooks: ${this.profileData.kaggle.notebooks}
+
+LinkedIn Network:
+├── Experience Roles: ${this.profileData.linkedin.experience.length}
+├── Education Records: ${this.profileData.linkedin.education.length}
+└── Location: ${this.profileData.linkedin.location}
+
+Topmate Services:
+└── Available Services: ${this.profileData.topmate.services.length}
+
+🔄 Data last updated: ${new Date().toLocaleString()}`;
+  }
+
+  private updateFilesWithScrapedData(): void {
+    if (!this.profileData) return;
+
+    // Update about.txt with real GitHub data
+    this.files['about.txt'] = `Name: ${this.profileData.github.name}
+Title: ${this.userData.title}
+Location: ${this.profileData.linkedin.location}
+GitHub Bio: ${this.profileData.github.bio}
+
+${this.profileData.github.bio || 'I am a passionate software developer with expertise in various technologies.'}
+Building innovative solutions and exploring new technologies.
+Always eager to learn and contribute to meaningful projects.
+
+📊 Quick Stats:
+├── GitHub Repos: ${this.profileData.github.publicRepos}
+├── GitHub Followers: ${this.profileData.github.followers}
+└── Kaggle Tier: ${this.profileData.kaggle.tier}
+
+"Code is like humor. When you have to explain it, it's bad." - Cory House`;
+
+    // Update projects.txt with real repository data
+    if (this.profileData.github.repositories.length > 0) {
+      const topRepos = this.profileData.github.repositories.slice(0, 4);
+      this.files['projects.txt'] = `📁 Live GitHub Projects:
+
+${topRepos.map(repo => `📁 ${repo.name}/
+   ├── Description: ${repo.description}
+   ├── Language: ${repo.language}
+   ├── ⭐ ${repo.stars} stars | 🍴 ${repo.forks} forks
+   └── URL: ${repo.url}`).join('\n\n')}
+
+💡 Use 'repos' command to see all repositories!
+🔗 GitHub: ${this.userData.github}`;
+    }
+  }
+
+  public updateProfileData(data: ProfileData): void {
+    this.profileData = data;
+    this.updateFilesWithScrapedData();
   }
 }

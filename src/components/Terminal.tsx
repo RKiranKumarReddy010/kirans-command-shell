@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { CommandProcessor } from './CommandProcessor';
+import { ProfileData } from '@/services/ProfileScraper';
 
 interface TerminalOutput {
   type: 'command' | 'output' | 'error';
@@ -7,14 +8,32 @@ interface TerminalOutput {
   timestamp?: Date;
 }
 
-export const Terminal: React.FC = () => {
+export interface TerminalRef {
+  updateProfileData: (data: ProfileData) => void;
+}
+
+export const Terminal = forwardRef<TerminalRef>((props, ref) => {
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<TerminalOutput[]>([]);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
-  const commandProcessor = new CommandProcessor();
+  const commandProcessor = useRef(new CommandProcessor()).current;
+
+  useImperativeHandle(ref, () => ({
+    updateProfileData: (data: ProfileData) => {
+      commandProcessor.updateProfileData(data);
+      setHistory(prev => [
+        ...prev,
+        { 
+          type: 'output', 
+          content: '🔄 Profile data updated! Try "about", "repos", or "stats" to see changes.',
+          timestamp: new Date() 
+        }
+      ]);
+    }
+  }));
 
   useEffect(() => {
     // Show welcome message
@@ -152,7 +171,7 @@ Type 'help' to see available commands.
       'help', 'about', 'skills', 'projects', 'project', 'contact', 'education',
       'ls', 'cat', 'pwd', 'whoami', 'date', 'clear', 'echo', 'github', 
       'linkedin', 'kaggle', 'topmate', 'curl', 'sudo', 'exit', 'vim', 
-      'nano', 'rm', 'history'
+      'nano', 'rm', 'history', 'scrape', 'repos', 'repositories', 'stats'
     ];
 
     // Available files
@@ -250,4 +269,6 @@ Type 'help' to see available commands.
       </div>
     </div>
   );
-};
+});
+
+Terminal.displayName = 'Terminal';
