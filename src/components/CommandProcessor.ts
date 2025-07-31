@@ -7,9 +7,9 @@ export class CommandProcessor {
     linkedin: 'https://www.linkedin.com/in/r-kiran-kumar-reddy-54400230b/',
     kaggle: 'https://www.kaggle.com/devitachi',
     topmate: 'https://topmate.io/kiran_kumar_reddy010',
-    email: 'rkiran.dev@gmail.com',
+    email: 'rkirankumarreddy599@gmail.com',
     location: 'India',
-    title: 'Software Developer',
+    title: 'Generative-AI Developer',
   };
 
   private profileData: ProfileData | null = null;
@@ -19,18 +19,27 @@ export class CommandProcessor {
 Title: ${this.userData.title}
 Location: ${this.userData.location}
 
-I am a passionate software developer with expertise in various technologies.
-I love building innovative solutions and exploring new technologies.
-Always eager to learn and contribute to meaningful projects.
+I'm a Generative-AI developer passionate about building AI Agents and real-time AI applications.
+I am interested in doing AI Research and creating innovative AI solutions.
+Always eager to learn and contribute to meaningful AI projects.
 
 "Code is like humor. When you have to explain it, it's bad." - Cory House`,
 
     'skills.txt': `Programming Languages:
-├── JavaScript/TypeScript
 ├── Python
+├── JavaScript/TypeScript
 ├── Java
 ├── C++
 └── SQL
+
+AI & Machine Learning:
+├── Generative AI
+├── AI Agents
+├── TensorFlow
+├── PyTorch
+├── Scikit-learn
+├── Pandas & NumPy
+└── Jupyter Notebooks
 
 Frameworks & Libraries:
 ├── React.js
@@ -49,12 +58,11 @@ Tools & Technologies:
 ├── Redis
 └── Linux
 
-Data Science & ML:
-├── Pandas
-├── NumPy
-├── Scikit-learn
-├── TensorFlow
-└── Jupyter Notebooks`,
+Research & Development:
+├── AI Research
+├── Real-time AI Applications
+├── Model Training & Deployment
+└── Data Analysis`,
 
     'projects.txt': `Available Projects:
 
@@ -66,11 +74,17 @@ Use 'project <name>' to explore a specific project:
    ├── Features: Command processing, ASCII art, terminal UI
    └── Status: ✅ Complete
 
-📁 data-analysis/
-   ├── Description: Various Kaggle competitions and datasets
-   ├── Tech Stack: Python, Pandas, Matplotlib, Seaborn
-   ├── Features: Data visualization, statistical analysis
-   └── Status: 🔄 Ongoing
+📁 ai-agents/
+   ├── Description: AI Agents and real-time AI applications
+   ├── Tech Stack: Python, TensorFlow, PyTorch
+   ├── Features: Generative AI, real-time processing
+   └── Status: 🔄 Active Development
+
+📁 ai-research/
+   ├── Description: AI Research projects and experiments
+   ├── Tech Stack: Python, Jupyter, ML Libraries
+   ├── Features: Model research, data analysis
+   └── Status: 🔄 Ongoing Research
 
 📁 web-applications/
    ├── Description: Full-stack applications with modern frameworks
@@ -78,13 +92,7 @@ Use 'project <name>' to explore a specific project:
    ├── Features: Authentication, CRUD operations, responsive UI
    └── Status: ✅ Multiple completed
 
-📁 ml-models/
-   ├── Description: Machine learning and predictive models
-   ├── Tech Stack: Python, Scikit-learn, TensorFlow, Jupyter
-   ├── Features: Model training, data preprocessing, evaluation
-   └── Status: 🔄 Research phase
-
-💡 Usage: Type 'project portfolio-terminal' to dive deeper into any project!
+💡 Usage: Type 'project ai-agents' to dive deeper into any project!
 🔗 GitHub: ${this.userData.github}`,
 
     'contact.txt': `📧 Get in Touch:
@@ -196,9 +204,12 @@ Self-taught skills:
       case 'exit':
         return `Thanks for visiting! Come back soon! 👋`;
       
-      case 'vim':
+
       case 'nano':
-        return `${cmd}: Editor not available in this terminal. Everything here is read-only!`;
+        if (args[0]) {
+          return `Opening nano editor for ${args[0]}...`;
+        }
+        return `Usage: nano <filename>`;
       
       case 'rm':
         return `rm: Permission denied. You cannot delete my portfolio! 😅`;
@@ -216,6 +227,12 @@ Self-taught skills:
       case 'stats':
         return this.showStats();
       
+      case 'kiran-js':
+        return this.generateKiranFromJS();
+      
+      case 'kiran-ts':
+        return this.generateKiranFromTS();
+      
       default:
         return `Command '${cmd}' not found. Type 'help' for available commands.`;
     }
@@ -223,75 +240,107 @@ Self-taught skills:
 
   private getHelpText(): string {
     return `
-╔═══════════════════════════════════════════════════════════════════════════════╗
-║                    🚀 TERMINAL PORTFOLIO COMMAND CENTER 🚀                   ║
-║                        Welcome to Kiran's Interactive Shell                   ║
-╚═══════════════════════════════════════════════════════════════════════════════╝
+🚀 TERMINAL PORTFOLIO COMMAND CENTER
+Welcome to Kiran's Interactive Shell
 
 📋 NAVIGATION COMMANDS
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ help             Display this awesome help menu                             │
-│ about            Get to know me and my journey                              │
-│ skills           Explore my technical expertise                             │
-│ projects         List all my projects                                       │
-│ project <name>   Dive deep into a specific project                          │
-│ contact          Find all my contact information                            │
-│ education        View my educational background                             │
-│ clear            Clear the terminal screen                                  │
+│ COMMAND          INSTRUCTION                    USECASES                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ help             Display help menu             Get command list & examples  │
+│ about            Get personal information      Learn about Kiran's journey  │
+│ skills           Show technical expertise      View programming skills      │
+│ projects         List all projects             Browse portfolio projects    │
+│ project <name>   Explore specific project      Get detailed project info    │
+│ contact          Show contact information      Find ways to reach out       │
+│ education        Display educational background View academic history       │
+│ clear            Clear terminal screen         Reset terminal display       │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 📁 FILE SYSTEM OPERATIONS
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ ls [directory]   List files and directories                                 │
-│ cat <filename>   Read file contents                                         │
-│ pwd              Show current working directory                             │
-│ whoami           Display current user                                       │
+│ COMMAND          INSTRUCTION                    USECASES                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ ls [directory]   List files & directories     Browse available files       │
+│ cat <filename>   Read file contents           View file information        │
+│ pwd              Show current directory       Get current location         │
+│ whoami           Display current user         Show user identity           │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 🌐 SOCIAL NETWORK SHORTCUTS
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ github           Open my GitHub profile                                     │
-│ linkedin         Open my LinkedIn profile                                   │
-│ kaggle           Open my Kaggle profile                                     │
-│ topmate          Open my Topmate profile                                    │
+│ COMMAND          INSTRUCTION                    USECASES                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ github           Open GitHub profile          View code repositories       │
+│ linkedin         Open LinkedIn profile        Connect professionally       │
+│ kaggle           Open Kaggle profile          View ML/AI projects          │
+│ topmate          Open Topmate profile         Book consultation sessions   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+📝 CODE EDITORS
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ COMMAND          INSTRUCTION                    USECASES                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ nano <filename>  Open nano editor             Simple text editing         │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 ⚡ SYSTEM UTILITIES
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ date             Display current date and time                              │
-│ echo <text>      Echo text to the terminal                                  │
-│ curl -s wttr.in  Check weather information                                  │
-│ exit             Display exit message                                       │
+│ COMMAND          INSTRUCTION                    USECASES                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ date             Show current date/time       Get timestamp information    │
+│ echo <text>      Display text output          Test terminal functionality  │
+│ curl -s wttr.in  Get weather information      Check current weather        │
+│ exit             Show exit message            Close terminal session       │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 🔄 PROFILE DATA COMMANDS
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ scrape           Fetch live data from GitHub, LinkedIn, Kaggle, Topmate     │
-│ repos            Show GitHub repositories with stats                        │
-│ stats            Display profile statistics from all platforms              │
+│ COMMAND          INSTRUCTION                    USECASES                    │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ scrape           Fetch live profile data      Update portfolio information │
+│ repos            Show GitHub repositories     View coding projects         │
+│ stats            Display profile statistics    Get platform metrics        │
+│ kiran-js         Generate KIRAN from JS       Create ASCII art from JS     │
+│ kiran-ts         Generate KIRAN from TS       Create ASCII art from TS     │
 └─────────────────────────────────────────────────────────────────────────────┘
 
-💡 PRO TIPS & SHORTCUTS
+💡 EXAMPLES
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ ↑/↓ Arrow Keys  Navigate through command history                            │
-│ Tab Key          Auto-complete commands                                     │
-│ Case Insensitive All commands work in any case                              │
-│ Quick Projects   Try: project portfolio-terminal                           │
+│ Command          Example Usage                Expected Output               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ help             help                        Show this help menu          │
+│ about            about                       Display personal info         │
+│ projects         projects                    List all projects            │
+│ project          project portfolio-terminal  Show specific project details │
+│ ls               ls                          List files in current dir    │
+│ cat              cat about.txt               Display about.txt contents   │
+│ github           github                      Open GitHub in browser       │
+│ date             date                        Show current date/time       │
+│ echo             echo "Hello World"          Display "Hello World"        │
+│ nano             nano script.py             Open nano editor for Python  │
+│ scrape           scrape                      Fetch latest profile data    │
 └─────────────────────────────────────────────────────────────────────────────┘
 
-🎭 EASTER EGGS (Try these for fun!)
-┌─────────────────────────────────────────────────────────────────────────────┐
-│ sudo, vim, nano, rm   ...and discover hidden responses! 😄                  │
-└─────────────────────────────────────────────────────────────────────────────┘
+🎯 QUICK START
+• Type 'projects' to see available projects
+• Use 'project <name>' to explore specific projects  
+• Try 'about' to learn about Kiran
+• Use ↑/↓ arrow keys for command history
+• Press Tab for auto-completion
 
-🎯 GET STARTED: Type 'projects' to see what I've built, then use 'project <name>'
-   to explore any project in detail!`;
+💡 PRO TIPS
+• All commands are case-insensitive
+• Use Tab key for command auto-completion
+• Arrow keys navigate command history
+• Try 'nano <filename>' to open the nano editor with easy-to-use interface
+• Try 'sudo', 'rm' for fun responses! 😄`;
   }
 
   private exploreProject(projectName?: string): string {
     if (!projectName) {
       return `Usage: project <name>
-Available projects: portfolio-terminal, data-analysis, web-applications, ml-models
+Available projects: portfolio-terminal, ai-agents, ai-research, web-applications
 
 💡 Tip: Use 'projects' to see the full list with descriptions!`;
     }
@@ -338,52 +387,52 @@ Available projects: portfolio-terminal, data-analysis, web-applications, ml-mode
 🔗 Live Demo: You're experiencing it right now!
 💾 Source: Available on my GitHub`,
 
-      'data-analysis': `
+      'ai-agents': `
 ╔═══════════════════════════════════════════════════════════════════════════════╗
-║                        📊 DATA ANALYSIS PROJECTS                             ║
+║                        🤖 AI AGENTS & APPLICATIONS                           ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
 
 🎯 PROJECT OVERVIEW
-   Collection of data science projects focusing on real-world datasets,
-   statistical analysis, and machine learning applications.
+   Advanced AI Agents and real-time AI applications focusing on generative AI,
+   autonomous systems, and intelligent automation solutions.
 
 💻 TECHNICAL STACK
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │ Language             Python 3.8+                                           │
-│ Data Processing      Pandas, NumPy                                          │
-│ Visualization        Matplotlib, Seaborn, Plotly                           │
-│ ML Libraries         Scikit-learn, TensorFlow                               │
-│ Environment          Jupyter Notebooks, Google Colab                       │
+│ AI Frameworks        TensorFlow, PyTorch, Transformers                      │
+│ Generative AI        GPT, BERT, Custom Language Models                      │
+│ Real-time Processing AsyncIO, WebSockets, Stream Processing                │
+│ Deployment           Docker, Kubernetes, Cloud Platforms                    │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 🚀 PROJECT CATEGORIES
-├── Kaggle Competitions
-│   ├── Titanic Survival Prediction (Top 15%)
-│   ├── House Prices Prediction (Advanced Regression)
-│   └── Customer Segmentation Analysis
-├── Exploratory Data Analysis
-│   ├── E-commerce Sales Analysis
-│   ├── Social Media Engagement Metrics
-│   └── Financial Market Trends
-├── Machine Learning Applications
-│   ├── Sentiment Analysis on Product Reviews
-│   ├── Recommendation Systems
-│   └── Time Series Forecasting
-└── Data Visualization Projects
-    ├── Interactive Dashboards
-    ├── Geographic Data Mapping
-    └── Statistical Report Generation
+├── Generative AI Applications
+│   ├── Custom Language Model Development
+│   ├── Text Generation and Summarization
+│   └── Creative Content Generation
+├── AI Agents & Automation
+│   ├── Autonomous Task Execution
+│   ├── Intelligent Decision Making
+│   └── Multi-Agent Systems
+├── Real-time AI Systems
+│   ├── Live Data Processing
+│   ├── Real-time Predictions
+│   └── Streaming Analytics
+└── AI Research Projects
+    ├── Model Architecture Research
+    ├── Performance Optimization
+    └── Novel AI Applications
 
 🔧 KEY METHODOLOGIES
-├── Data cleaning and preprocessing pipelines
-├── Feature engineering and selection techniques
-├── Cross-validation and model evaluation metrics
-├── Hyperparameter tuning and optimization
-└── Statistical significance testing
+├── Advanced neural network architectures
+├── Transfer learning and fine-tuning
+├── Real-time model inference
+├── Multi-modal AI processing
+└── Scalable AI system design
 
-📈 STATUS: 🔄 ACTIVELY DEVELOPING
-🏆 Achievements: Multiple Kaggle competition entries
-📊 Notebooks: 20+ comprehensive analysis notebooks`,
+📈 STATUS: 🔄 ACTIVE DEVELOPMENT
+🎯 Focus: Production-ready AI applications
+🏆 Goal: Deploying AI agents in real-world scenarios`,
 
       'web-applications': `
 ╔═══════════════════════════════════════════════════════════════════════════════╗
@@ -432,59 +481,59 @@ Available projects: portfolio-terminal, data-analysis, web-applications, ml-mode
 📈 STATUS: ✅ MULTIPLE PROJECTS COMPLETED
 🎯 Current Focus: Serverless applications and JAMstack`,
 
-      'ml-models': `
+      'ai-research': `
 ╔═══════════════════════════════════════════════════════════════════════════════╗
-║                     🤖 MACHINE LEARNING MODELS                               ║
+║                        🔬 AI RESEARCH & DEVELOPMENT                          ║
 ╚═══════════════════════════════════════════════════════════════════════════════╝
 
 🎯 PROJECT OVERVIEW
-   Advanced machine learning projects focusing on predictive modeling,
-   deep learning, and AI-powered solutions for real-world problems.
+   Cutting-edge AI research focusing on generative models, novel architectures,
+   and pushing the boundaries of artificial intelligence capabilities.
 
 💻 TECHNICAL FRAMEWORK
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│ Languages            Python, R                                              │
-│ ML Frameworks        TensorFlow, PyTorch, Scikit-learn                      │
-│ Data Processing      Pandas, NumPy, SciPy                                   │
-│ Visualization        Matplotlib, Seaborn, TensorBoard                       │
-│ Cloud Platforms      Google Colab, AWS SageMaker                            │
+│ Languages            Python, C++                                            │
+│ Research Tools       Jupyter, TensorBoard, Weights & Biases                 │
+│ ML Frameworks        TensorFlow, PyTorch, JAX                               │
+│ Data Processing      Pandas, NumPy, SciPy, Dask                             │
+│ Cloud Platforms      Google Colab, AWS, Google Cloud                        │
 └─────────────────────────────────────────────────────────────────────────────┘
 
-🚀 MODEL CATEGORIES
-├── Supervised Learning
-│   ├── Classification Models (Random Forest, SVM, Neural Networks)
-│   ├── Regression Analysis (Linear, Polynomial, Ridge, Lasso)
-│   └── Ensemble Methods (Gradient Boosting, XGBoost)
-├── Unsupervised Learning
-│   ├── Clustering Algorithms (K-Means, DBSCAN, Hierarchical)
-│   ├── Dimensionality Reduction (PCA, t-SNE, UMAP)
-│   └── Association Rule Mining
-├── Deep Learning
-│   ├── Convolutional Neural Networks (Image Classification)
-│   ├── Recurrent Neural Networks (Time Series, NLP)
-│   └── Transformer Models (BERT, GPT applications)
-└── Specialized Applications
-    ├── Natural Language Processing
-    ├── Computer Vision
-    └── Recommendation Systems
+🚀 RESEARCH AREAS
+├── Generative AI & Language Models
+│   ├── Custom Transformer Architectures
+│   ├── Multi-modal Generation Models
+│   └── Efficient Training Techniques
+├── AI Agent Research
+│   ├── Autonomous Decision Making
+│   ├── Multi-Agent Coordination
+│   └── Reinforcement Learning Agents
+├── Model Optimization
+│   ├── Neural Architecture Search
+│   ├── Model Compression & Quantization
+│   └── Efficient Inference Methods
+└── Novel AI Applications
+    ├── Creative AI Systems
+    ├── Scientific Discovery AI
+    └── AI for Social Good
 
-🔬 RESEARCH AREAS
-├── Model interpretability and explainable AI
-├── Transfer learning and fine-tuning techniques
-├── Hyperparameter optimization strategies
-├── Model deployment and MLOps practices
-└── Ethical AI and bias detection
+🔬 RESEARCH METHODOLOGIES
+├── Experimental design and hypothesis testing
+├── Advanced statistical analysis
+├── Model interpretability research
+├── Ethical AI and bias mitigation
+└── Reproducible research practices
 
-📊 PERFORMANCE METRICS
-├── Accuracy, Precision, Recall, F1-Score
-├── ROC-AUC and Precision-Recall curves
-├── Cross-validation and holdout testing
-├── Statistical significance testing
-└── Business impact measurement
+📊 RESEARCH OUTPUTS
+├── Academic papers and publications
+├── Open-source model implementations
+├── Novel algorithm development
+├── Benchmark datasets and evaluations
+└── Industry collaborations
 
-📈 STATUS: 🔄 RESEARCH & DEVELOPMENT PHASE
-🎯 Current Focus: Deploying models to production environments
-🏆 Goal: Contributing to open-source ML projects`
+📈 STATUS: 🔄 ACTIVE RESEARCH
+🎯 Current Focus: Generative AI and AI agent research
+🏆 Goal: Contributing to AI research community and publications`
     };
 
     const project = projects[projectName.toLowerCase()];
@@ -493,9 +542,9 @@ Available projects: portfolio-terminal, data-analysis, web-applications, ml-mode
 
 Available projects:
 ├── portfolio-terminal
-├── data-analysis  
-├── web-applications
-└── ml-models
+├── ai-agents
+├── ai-research
+└── web-applications
 
 💡 Tip: Use 'projects' to see descriptions of all projects!`;
     }
@@ -663,5 +712,47 @@ ${topRepos.map(repo => `📁 ${repo.name}/
   public updateProfileData(data: ProfileData): void {
     this.profileData = data;
     this.updateFilesWithScrapedData();
+  }
+
+  private async generateKiranFromJS(): Promise<string> {
+    try {
+      const response = await fetch('/kiran.js');
+      const jsContent = await response.text();
+      
+      // Extract the KIRAN art from the JavaScript file
+      const kiranLines = [
+        "██╗  ██╗██╗██████╗  █████╗ ███╗   ██╗",
+        "██║ ██╔╝██║██╔══██╗██╔══██╗████╗  ██║",
+        "█████╔╝ ██║██████╔╝███████║██╔██╗ ██║",
+        "██╔═██╗ ██║██╔══██╗██╔══██║██║╚██╗██║",
+        "██║  ██╗██║██║  ██║██║  ██║██║ ╚████║",
+        "╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝"
+      ];
+      
+      return `Generated from JavaScript file:\n\n${kiranLines.join('\n')}\n\nJavaScript Code:\n${jsContent}`;
+    } catch (error) {
+      return `Error loading JavaScript file: ${error}`;
+    }
+  }
+
+  private async generateKiranFromTS(): Promise<string> {
+    try {
+      const response = await fetch('/kiran.ts');
+      const tsContent = await response.text();
+      
+      // Extract the KIRAN art from the TypeScript file
+      const kiranLines = [
+        "██╗  ██╗██╗██████╗  █████╗ ███╗   ██╗",
+        "██║ ██╔╝██║██╔══██╗██╔══██╗████╗  ██║",
+        "█████╔╝ ██║██████╔╝███████║██╔██╗ ██║",
+        "██╔═██╗ ██║██╔══██╗██╔══██║██║╚██╗██║",
+        "██║  ██╗██║██║  ██║██║  ██║██║ ╚████║",
+        "╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝"
+      ];
+      
+      return `Generated from TypeScript file:\n\n${kiranLines.join('\n')}\n\nTypeScript Code:\n${tsContent}`;
+    } catch (error) {
+      return `Error loading TypeScript file: ${error}`;
+    }
   }
 }

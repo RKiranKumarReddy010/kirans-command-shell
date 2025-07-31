@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import { CommandProcessor } from './CommandProcessor';
 import { ProfileData } from '@/services/ProfileScraper';
+import { NanoEditor } from './NanoEditor';
 
 interface TerminalOutput {
   type: 'command' | 'output' | 'error';
@@ -17,6 +18,12 @@ export const Terminal = forwardRef<TerminalRef>((props, ref) => {
   const [history, setHistory] = useState<TerminalOutput[]>([]);
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
+
+  const [nanoEditor, setNanoEditor] = useState<{
+    isOpen: boolean;
+    filename: string;
+    content: string;
+  } | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
   const commandProcessor = useRef(new CommandProcessor()).current;
@@ -36,24 +43,63 @@ export const Terminal = forwardRef<TerminalRef>((props, ref) => {
   }));
 
   useEffect(() => {
-    // Show welcome message
-    setHistory([
-      {
-        type: 'output',
-        content: `
- ██████╗ ██╗  ██╗██╗██████╗  █████╗ ███╗   ██╗    ██████╗ ███████╗██████╗ ██████╗ ██╗   ██╗
-██╔══██╗██║ ██╔╝██║██╔══██╗██╔══██╗████╗  ██║    ██╔══██╗██╔════╝██╔══██╗██╔══██╗╚██╗ ██╔╝
-██████╔╝█████╔╝ ██║██████╔╝███████║██╔██╗ ██║    ██████╔╝█████╗  ██║  ██║██║  ██║ ╚████╔╝ 
-██╔══██╗██╔═██╗ ██║██╔══██╗██╔══██║██║╚██╗██║    ██╔══██╗██╔══╝  ██║  ██║██║  ██║  ╚██╔╝  
-██║  ██║██║  ██╗██║██║  ██║██║  ██║██║ ╚████║    ██║  ██║███████╗██████╔╝██████╔╝   ██║   
-╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝    ╚═╝  ╚═╝╚══════╝╚═════╝ ╚═════╝    ╚═╝   
+    // Generate welcome message using JavaScript
+    const loadWelcomeMessage = async () => {
+      try {
+        // Generate KIRAN text from JavaScript
+        const kiranLines = [
+          "██╗  ██╗██╗██████╗  █████╗ ███╗   ██╗",
+          "██║ ██╔╝██║██╔══██╗██╔══██╗████╗  ██║",
+          "█████╔╝ ██║██████╔╝███████║██╔██╗ ██║",
+          "██╔═██╗ ██║██╔══██╗██╔══██║██║╚██╗██║",
+          "██║  ██╗██║██║  ██║██║  ██║██║ ╚████║",
+          "╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝"
+        ];
+        
+        const welcomeContent = `
+                                                                               
+                                                                               
+                                                                               
+                              ${kiranLines[0]}                              
+                              ${kiranLines[1]}                              
+                              ${kiranLines[2]}                              
+                              ${kiranLines[3]}                              
+                              ${kiranLines[4]}                              
+                              ${kiranLines[5]}                              
+                                                                               
+                    🤖 Generative-AI Developer Portfolio Terminal 🤖           
+                                                                               
+  Welcome to my interactive terminal! Type 'help' to see available commands.  
+                                                                               
+        `;
+        
+        setHistory([
+          {
+            type: 'output',
+            content: welcomeContent,
+            timestamp: new Date(),
+          },
+        ]);
+      } catch (error) {
+        console.error('Error generating welcome message:', error);
+        // Fallback to default welcome message
+        setHistory([
+          {
+            type: 'output',
+            content: `
+                                                                               
+                    🤖 Generative-AI Developer Portfolio Terminal 🤖           
+                                                                               
+  Welcome to my interactive terminal! Type 'help' to see available commands.  
+                                                                               
+            `,
+            timestamp: new Date(),
+          },
+        ]);
+      }
+    };
 
-Welcome to R Kiran Kumar Reddy's Portfolio Terminal!
-Type 'help' to see available commands.
-        `,
-        timestamp: new Date(),
-      },
-    ]);
+    loadWelcomeMessage();
 
     // Focus input
     if (inputRef.current) {
@@ -80,6 +126,31 @@ Type 'help' to see available commands.
       ...prev,
       { type: 'command', content: `$ ${command}`, timestamp: new Date() }
     ]);
+
+
+
+    // Handle nano command
+    if (command.startsWith('nano ')) {
+      const filename = command.substring(5).trim();
+      if (filename) {
+        setNanoEditor({
+          isOpen: true,
+          filename,
+          content: `# ${filename} - Python file
+# Created with nano editor
+
+def hello_world():
+    """Simple hello world function"""
+    print("Hello, World!")
+    return "Hello from Python!"
+
+if __name__ == "__main__":
+    hello_world()
+`
+        });
+        return;
+      }
+    }
 
     // Process command
     try {
@@ -181,7 +252,7 @@ Type 'help' to see available commands.
 
     // Available project names
     const projects = [
-      'portfolio-terminal', 'data-analysis', 'web-applications', 'ml-models'
+      'portfolio-terminal', 'ai-agents', 'ai-research', 'web-applications'
     ];
 
     if (parts.length === 1) {
@@ -226,6 +297,23 @@ Type 'help' to see available commands.
     return { suggestions: [] };
   };
 
+
+
+  const handleNanoSave = (content: string) => {
+    setHistory(prev => [
+      ...prev,
+      { type: 'output', content: `File "${nanoEditor?.filename}" saved successfully!`, timestamp: new Date() }
+    ]);
+  };
+
+  const handleNanoExit = () => {
+    setNanoEditor(null);
+    setHistory(prev => [
+      ...prev,
+      { type: 'output', content: `Nano editor closed. File "${nanoEditor?.filename}" was edited.`, timestamp: new Date() }
+    ]);
+  };
+
   return (
     <div className="h-screen bg-terminal-bg flex flex-col overflow-hidden">
       {/* Terminal header */}
@@ -267,6 +355,18 @@ Type 'help' to see available commands.
           <span className="text-terminal-prompt cursor-blink">█</span>
         </div>
       </div>
+
+
+
+      {/* Nano Editor */}
+      {nanoEditor && (
+        <NanoEditor
+          filename={nanoEditor.filename}
+          initialContent={nanoEditor.content}
+          onSave={handleNanoSave}
+          onExit={handleNanoExit}
+        />
+      )}
     </div>
   );
 });

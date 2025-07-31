@@ -151,15 +151,23 @@ export class ProfileScraper {
   private static getDefaultGitHub() {
     return {
       name: 'R Kiran Kumar Reddy',
-      bio: 'Software Developer passionate about technology',
+      bio: 'Generative-AI Developer passionate about building AI Agents and real-time AI applications',
       followers: 0,
       following: 0,
       publicRepos: 0,
       repositories: [
         {
           name: 'portfolio-terminal',
-          description: 'Interactive terminal-style portfolio',
+          description: 'Interactive terminal-style portfolio with real-time data scraping',
           language: 'TypeScript',
+          stars: 0,
+          forks: 0,
+          url: 'https://github.com/RKiranKumarReddy010'
+        },
+        {
+          name: 'ai-agents',
+          description: 'AI Agents and real-time AI applications',
+          language: 'Python',
           stars: 0,
           forks: 0,
           url: 'https://github.com/RKiranKumarReddy010'
@@ -171,20 +179,20 @@ export class ProfileScraper {
   private static getDefaultLinkedIn() {
     return {
       name: 'R Kiran Kumar Reddy',
-      headline: 'Software Developer | Technology Enthusiast',
+      headline: 'Generative-AI Developer | AI Research Enthusiast',
       location: 'India',
       experience: [
         {
-          title: 'Software Developer',
-          company: 'Tech Company',
+          title: 'Generative-AI Developer',
+          company: 'AI Research & Development',
           duration: '2023 - Present',
-          description: 'Developing innovative software solutions'
+          description: 'Building AI Agents and real-time AI applications, conducting AI research'
         }
       ],
       education: [
         {
-          school: 'University',
-          degree: 'Computer Science',
+          school: 'Computer Science',
+          degree: 'Bachelor\'s Degree',
           duration: '2020 - 2024'
         }
       ]
@@ -204,18 +212,23 @@ export class ProfileScraper {
 
   private static getDefaultTopmate() {
     return {
-      name: 'Kiran Kumar Reddy',
-      description: 'Software Developer offering mentorship and consultation',
+      name: 'R Kiran Kumar Reddy',
+      description: 'Generative-AI Developer offering AI mentorship and consultation',
       services: [
         {
-          title: '1:1 Mentorship',
+          title: 'AI Development Mentorship',
           price: '$50',
           duration: '1 hour'
         },
         {
-          title: 'Code Review',
+          title: 'AI Project Review',
           price: '$30',
           duration: '30 minutes'
+        },
+        {
+          title: 'AI Research Consultation',
+          price: '$40',
+          duration: '45 minutes'
         }
       ]
     };
