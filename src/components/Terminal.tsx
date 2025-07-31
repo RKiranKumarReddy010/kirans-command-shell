@@ -109,11 +109,15 @@ Type 'help' to see available commands.
       }
     } else if (e.key === 'Tab') {
       e.preventDefault();
-      // Simple auto-complete for common commands
-      const commands = ['help', 'about', 'skills', 'projects', 'contact', 'clear', 'ls', 'cat'];
-      const matches = commands.filter(cmd => cmd.startsWith(input.toLowerCase()));
-      if (matches.length === 1) {
-        setInput(matches[0]);
+      const completion = getAutoCompletion(input);
+      if (completion.completed) {
+        setInput(completion.completed);
+      } else if (completion.suggestions.length > 0) {
+        // Show suggestions in terminal
+        setHistory(prev => [
+          ...prev,
+          { type: 'output', content: completion.suggestions.join('  '), timestamp: new Date() }
+        ]);
       }
     }
   };
@@ -137,6 +141,70 @@ Type 'help' to see available commands.
       default:
         return 'text-terminal-text';
     }
+  };
+
+  const getAutoCompletion = (input: string): { completed?: string; suggestions: string[] } => {
+    const parts = input.trim().split(' ');
+    const command = parts[0]?.toLowerCase() || '';
+    
+    // All available commands
+    const commands = [
+      'help', 'about', 'skills', 'projects', 'project', 'contact', 'education',
+      'ls', 'cat', 'pwd', 'whoami', 'date', 'clear', 'echo', 'github', 
+      'linkedin', 'kaggle', 'topmate', 'curl', 'sudo', 'exit', 'vim', 
+      'nano', 'rm', 'history'
+    ];
+
+    // Available files
+    const files = [
+      'about.txt', 'skills.txt', 'projects.txt', 'contact.txt', 'education.txt'
+    ];
+
+    // Available project names
+    const projects = [
+      'portfolio-terminal', 'data-analysis', 'web-applications', 'ml-models'
+    ];
+
+    if (parts.length === 1) {
+      // Auto-complete commands
+      const matches = commands.filter(cmd => cmd.startsWith(command));
+      if (matches.length === 1) {
+        return { completed: matches[0], suggestions: [] };
+      } else if (matches.length > 1) {
+        return { suggestions: matches };
+      }
+    } else if (parts.length === 2) {
+      const secondArg = parts[1]?.toLowerCase() || '';
+      
+      if (command === 'cat') {
+        // Auto-complete file names for cat command
+        const matches = files.filter(file => file.startsWith(secondArg));
+        if (matches.length === 1) {
+          return { completed: `${command} ${matches[0]}`, suggestions: [] };
+        } else if (matches.length > 1) {
+          return { suggestions: matches };
+        }
+      } else if (command === 'project') {
+        // Auto-complete project names
+        const matches = projects.filter(proj => proj.startsWith(secondArg));
+        if (matches.length === 1) {
+          return { completed: `${command} ${matches[0]}`, suggestions: [] };
+        } else if (matches.length > 1) {
+          return { suggestions: matches };
+        }
+      } else if (command === 'ls') {
+        // For ls command, suggest directories (simplified)
+        const dirs = ['.', '..', '~'];
+        const matches = dirs.filter(dir => dir.startsWith(secondArg));
+        if (matches.length === 1) {
+          return { completed: `${command} ${matches[0]}`, suggestions: [] };
+        } else if (matches.length > 1) {
+          return { suggestions: matches };
+        }
+      }
+    }
+
+    return { suggestions: [] };
   };
 
   return (
