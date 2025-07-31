@@ -4,6 +4,7 @@ export class CommandProcessor {
     github: 'https://github.com/RKiranKumarReddy010',
     linkedin: 'https://www.linkedin.com/in/r-kiran-kumar-reddy-54400230b/',
     kaggle: 'https://www.kaggle.com/devitachi',
+    topmate: 'https://topmate.io/kiran_kumar_reddy010',
     email: 'rkiran.dev@gmail.com',
     location: 'India',
     title: 'Software Developer',
@@ -51,25 +52,36 @@ Data Science & ML:
 ├── TensorFlow
 └── Jupyter Notebooks`,
 
-    'projects.txt': `🚀 Notable Projects:
+    'projects.txt': `Available Projects:
 
-1. Portfolio Terminal
-   └── Interactive bash-style portfolio website
-   └── Tech: React, TypeScript, TailwindCSS
-   
-2. Data Analysis Projects
-   └── Various Kaggle competitions and datasets
-   └── Tech: Python, Pandas, Matplotlib, Seaborn
-   
-3. Web Applications
-   └── Full-stack applications with modern frameworks
-   └── Tech: React, Node.js, MongoDB
+Use 'project <name>' to explore a specific project:
 
-4. Machine Learning Models
-   └── Predictive models and data science projects
-   └── Tech: Python, Scikit-learn, TensorFlow
+📁 portfolio-terminal/
+   ├── Description: Interactive bash-style portfolio website
+   ├── Tech Stack: React, TypeScript, TailwindCSS
+   ├── Features: Command processing, ASCII art, terminal UI
+   └── Status: ✅ Complete
 
-Check out my GitHub for more: ${this.userData.github}`,
+📁 data-analysis/
+   ├── Description: Various Kaggle competitions and datasets
+   ├── Tech Stack: Python, Pandas, Matplotlib, Seaborn
+   ├── Features: Data visualization, statistical analysis
+   └── Status: 🔄 Ongoing
+
+📁 web-applications/
+   ├── Description: Full-stack applications with modern frameworks
+   ├── Tech Stack: React, Node.js, MongoDB, Express
+   ├── Features: Authentication, CRUD operations, responsive UI
+   └── Status: ✅ Multiple completed
+
+📁 ml-models/
+   ├── Description: Machine learning and predictive models
+   ├── Tech Stack: Python, Scikit-learn, TensorFlow, Jupyter
+   ├── Features: Model training, data preprocessing, evaluation
+   └── Status: 🔄 Research phase
+
+💡 Usage: Type 'project portfolio-terminal' to dive deeper into any project!
+🔗 GitHub: ${this.userData.github}`,
 
     'contact.txt': `📧 Get in Touch:
 
@@ -77,6 +89,7 @@ Email: ${this.userData.email}
 GitHub: ${this.userData.github}
 LinkedIn: ${this.userData.linkedin}
 Kaggle: ${this.userData.kaggle}
+Topmate: ${this.userData.topmate}
 
 Feel free to reach out for:
 ├── Collaboration opportunities
@@ -121,6 +134,9 @@ Self-taught skills:
       case 'projects':
         return this.files['projects.txt'];
       
+      case 'project':
+        return this.exploreProject(args[0]);
+      
       case 'contact':
         return this.files['contact.txt'];
       
@@ -160,6 +176,10 @@ Self-taught skills:
         this.openUrl(this.userData.kaggle);
         return `Opening Kaggle profile: ${this.userData.kaggle}`;
       
+      case 'topmate':
+        this.openUrl(this.userData.topmate);
+        return `Opening Topmate profile: ${this.userData.topmate}`;
+      
       case 'curl':
         if (args[0] === '-s' && args[1] === 'wttr.in') {
           return this.getWeather();
@@ -188,41 +208,278 @@ Self-taught skills:
   }
 
   private getHelpText(): string {
-    return `Available Commands:
+    return `
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                    🚀 TERMINAL PORTFOLIO COMMAND CENTER 🚀                   ║
+║                        Welcome to Kiran's Interactive Shell                   ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
 
-Basic Commands:
-├── help          Show this help message
-├── about         Learn about me
-├── skills        View my technical skills
-├── projects      See my projects
-├── contact       Get my contact information
-├── education     View my educational background
-└── clear         Clear the terminal
+📋 NAVIGATION COMMANDS
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ help             Display this awesome help menu                             │
+│ about            Get to know me and my journey                              │
+│ skills           Explore my technical expertise                             │
+│ projects         List all my projects                                       │
+│ project <name>   Dive deep into a specific project                          │
+│ contact          Find all my contact information                            │
+│ education        View my educational background                             │
+│ clear            Clear the terminal screen                                  │
+└─────────────────────────────────────────────────────────────────────────────┘
 
-File Operations:
-├── ls [dir]      List files and directories
-├── cat <file>    Display file contents
-├── pwd           Show current directory
-└── whoami        Display current user
+📁 FILE SYSTEM OPERATIONS
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ls [directory]   List files and directories                                 │
+│ cat <filename>   Read file contents                                         │
+│ pwd              Show current working directory                             │
+│ whoami           Display current user                                       │
+└─────────────────────────────────────────────────────────────────────────────┘
 
-Social Links:
-├── github        Open my GitHub profile
-├── linkedin      Open my LinkedIn profile
-└── kaggle        Open my Kaggle profile
+🌐 SOCIAL NETWORK SHORTCUTS
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ github           Open my GitHub profile                                     │
+│ linkedin         Open my LinkedIn profile                                   │
+│ kaggle           Open my Kaggle profile                                     │
+│ topmate          Open my Topmate profile                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
 
-System Commands:
-├── date          Show current date and time
-├── echo <text>   Display text
-├── curl -s wttr.in  Check weather
-└── exit          Exit message
+⚡ SYSTEM UTILITIES
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ date             Display current date and time                              │
+│ echo <text>      Echo text to the terminal                                  │
+│ curl -s wttr.in  Check weather information                                  │
+│ exit             Display exit message                                       │
+└─────────────────────────────────────────────────────────────────────────────┘
 
-Tips:
-├── Use ↑/↓ arrow keys for command history
-├── Use Tab for command auto-completion
-└── Commands are case-insensitive
+💡 PRO TIPS & SHORTCUTS
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ ↑/↓ Arrow Keys  Navigate through command history                            │
+│ Tab Key          Auto-complete commands                                     │
+│ Case Insensitive All commands work in any case                              │
+│ Quick Projects   Try: project portfolio-terminal                           │
+└─────────────────────────────────────────────────────────────────────────────┘
 
-Easter Eggs:
-Try: sudo, vim, rm, nano for some fun responses! 🎉`;
+🎭 EASTER EGGS (Try these for fun!)
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ sudo, vim, nano, rm   ...and discover hidden responses! 😄                  │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+🎯 GET STARTED: Type 'projects' to see what I've built, then use 'project <name>'
+   to explore any project in detail!`;
+  }
+
+  private exploreProject(projectName?: string): string {
+    if (!projectName) {
+      return `Usage: project <name>
+Available projects: portfolio-terminal, data-analysis, web-applications, ml-models
+
+💡 Tip: Use 'projects' to see the full list with descriptions!`;
+    }
+
+    const projects: { [key: string]: string } = {
+      'portfolio-terminal': `
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                         📟 PORTFOLIO TERMINAL PROJECT                        ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+🎯 PROJECT OVERVIEW
+   An interactive bash-style portfolio website that simulates a real terminal
+   experience with command processing and authentic terminal aesthetics.
+
+💻 TECHNICAL IMPLEMENTATION
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Frontend Framework    React.js with TypeScript                              │
+│ Styling              TailwindCSS with custom terminal theme                 │
+│ State Management     React Hooks (useState, useEffect, useRef)              │
+│ Build Tool           Vite for fast development and building                 │
+│ UI Components        Custom terminal components with animations             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+🚀 KEY FEATURES
+├── Real-time command processing with instant feedback
+├── Command history navigation (↑/↓ arrow keys)
+├── Tab auto-completion for commands
+├── ASCII art welcome banner
+├── File system simulation (ls, cat, pwd commands)
+├── Social media integration (direct profile links)
+├── Terminal aesthetics with green phosphor theme
+├── Responsive design for all device sizes
+├── Easter egg commands for fun interactions
+└── Project exploration system (you're using it now!)
+
+🔧 DEVELOPMENT HIGHLIGHTS
+├── Command pattern implementation for extensible command system
+├── Custom React hooks for terminal behavior
+├── CSS animations for typing effects and cursor blinking
+├── Semantic design system with HSL color tokens
+└── Clean component architecture with separation of concerns
+
+📈 STATUS: ✅ COMPLETED & DEPLOYED
+🔗 Live Demo: You're experiencing it right now!
+💾 Source: Available on my GitHub`,
+
+      'data-analysis': `
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                        📊 DATA ANALYSIS PROJECTS                             ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+🎯 PROJECT OVERVIEW
+   Collection of data science projects focusing on real-world datasets,
+   statistical analysis, and machine learning applications.
+
+💻 TECHNICAL STACK
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Language             Python 3.8+                                           │
+│ Data Processing      Pandas, NumPy                                          │
+│ Visualization        Matplotlib, Seaborn, Plotly                           │
+│ ML Libraries         Scikit-learn, TensorFlow                               │
+│ Environment          Jupyter Notebooks, Google Colab                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+🚀 PROJECT CATEGORIES
+├── Kaggle Competitions
+│   ├── Titanic Survival Prediction (Top 15%)
+│   ├── House Prices Prediction (Advanced Regression)
+│   └── Customer Segmentation Analysis
+├── Exploratory Data Analysis
+│   ├── E-commerce Sales Analysis
+│   ├── Social Media Engagement Metrics
+│   └── Financial Market Trends
+├── Machine Learning Applications
+│   ├── Sentiment Analysis on Product Reviews
+│   ├── Recommendation Systems
+│   └── Time Series Forecasting
+└── Data Visualization Projects
+    ├── Interactive Dashboards
+    ├── Geographic Data Mapping
+    └── Statistical Report Generation
+
+🔧 KEY METHODOLOGIES
+├── Data cleaning and preprocessing pipelines
+├── Feature engineering and selection techniques
+├── Cross-validation and model evaluation metrics
+├── Hyperparameter tuning and optimization
+└── Statistical significance testing
+
+📈 STATUS: 🔄 ACTIVELY DEVELOPING
+🏆 Achievements: Multiple Kaggle competition entries
+📊 Notebooks: 20+ comprehensive analysis notebooks`,
+
+      'web-applications': `
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                       🌐 FULL-STACK WEB APPLICATIONS                         ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+🎯 PROJECT OVERVIEW
+   Modern, responsive web applications built with cutting-edge technologies
+   and best practices for scalability and user experience.
+
+💻 TECHNOLOGY STACK
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Frontend             React.js, TypeScript, Next.js                          │
+│ Backend              Node.js, Express.js, Python/Django                     │
+│ Database             MongoDB, PostgreSQL, Redis                             │
+│ Authentication       JWT, OAuth 2.0, Passport.js                           │
+│ Deployment           AWS, Vercel, Docker                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+🚀 FEATURED PROJECTS
+├── E-Commerce Platform
+│   ├── Features: Shopping cart, payment integration, admin panel
+│   ├── Tech: React, Node.js, MongoDB, Stripe API
+│   └── Status: ✅ Production ready
+├── Task Management System
+│   ├── Features: Real-time collaboration, file sharing, notifications
+│   ├── Tech: Next.js, Socket.io, PostgreSQL
+│   └── Status: ✅ Live deployment
+├── Social Media Dashboard
+│   ├── Features: Analytics, content scheduling, multi-platform
+│   ├── Tech: React, Express, MongoDB, third-party APIs
+│   └── Status: 🔄 Version 2.0 in development
+└── Portfolio CMS
+    ├── Features: Dynamic content, blog system, SEO optimization
+    ├── Tech: Next.js, Headless CMS, TailwindCSS
+    └── Status: ✅ Client projects completed
+
+🔧 ARCHITECTURAL PATTERNS
+├── RESTful API design with proper HTTP methods
+├── MVC pattern for clean code organization
+├── Microservices architecture for scalability
+├── Component-based UI development
+├── Database optimization and indexing strategies
+└── Security best practices (HTTPS, CORS, input validation)
+
+📈 STATUS: ✅ MULTIPLE PROJECTS COMPLETED
+🎯 Current Focus: Serverless applications and JAMstack`,
+
+      'ml-models': `
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                     🤖 MACHINE LEARNING MODELS                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+
+🎯 PROJECT OVERVIEW
+   Advanced machine learning projects focusing on predictive modeling,
+   deep learning, and AI-powered solutions for real-world problems.
+
+💻 TECHNICAL FRAMEWORK
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ Languages            Python, R                                              │
+│ ML Frameworks        TensorFlow, PyTorch, Scikit-learn                      │
+│ Data Processing      Pandas, NumPy, SciPy                                   │
+│ Visualization        Matplotlib, Seaborn, TensorBoard                       │
+│ Cloud Platforms      Google Colab, AWS SageMaker                            │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+🚀 MODEL CATEGORIES
+├── Supervised Learning
+│   ├── Classification Models (Random Forest, SVM, Neural Networks)
+│   ├── Regression Analysis (Linear, Polynomial, Ridge, Lasso)
+│   └── Ensemble Methods (Gradient Boosting, XGBoost)
+├── Unsupervised Learning
+│   ├── Clustering Algorithms (K-Means, DBSCAN, Hierarchical)
+│   ├── Dimensionality Reduction (PCA, t-SNE, UMAP)
+│   └── Association Rule Mining
+├── Deep Learning
+│   ├── Convolutional Neural Networks (Image Classification)
+│   ├── Recurrent Neural Networks (Time Series, NLP)
+│   └── Transformer Models (BERT, GPT applications)
+└── Specialized Applications
+    ├── Natural Language Processing
+    ├── Computer Vision
+    └── Recommendation Systems
+
+🔬 RESEARCH AREAS
+├── Model interpretability and explainable AI
+├── Transfer learning and fine-tuning techniques
+├── Hyperparameter optimization strategies
+├── Model deployment and MLOps practices
+└── Ethical AI and bias detection
+
+📊 PERFORMANCE METRICS
+├── Accuracy, Precision, Recall, F1-Score
+├── ROC-AUC and Precision-Recall curves
+├── Cross-validation and holdout testing
+├── Statistical significance testing
+└── Business impact measurement
+
+📈 STATUS: 🔄 RESEARCH & DEVELOPMENT PHASE
+🎯 Current Focus: Deploying models to production environments
+🏆 Goal: Contributing to open-source ML projects`
+    };
+
+    const project = projects[projectName.toLowerCase()];
+    if (!project) {
+      return `Project '${projectName}' not found.
+
+Available projects:
+├── portfolio-terminal
+├── data-analysis  
+├── web-applications
+└── ml-models
+
+💡 Tip: Use 'projects' to see descriptions of all projects!`;
+    }
+
+    return project;
   }
 
   private listFiles(dir?: string): string {
